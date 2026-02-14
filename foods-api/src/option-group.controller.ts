@@ -19,7 +19,7 @@ export class OptionGroupController {
   getOptionGroup(
     @Param('brandId') brandId: string,
     @Param('id') id: string,
-  ): Promise<OptionGroup> {
+  ): Promise<OptionGroup | null> {
     return this.optionGroupService.getOptionGroupById(brandId, id);
   }
 }

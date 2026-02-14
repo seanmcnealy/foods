@@ -34,7 +34,7 @@ export class CategoryService {
     return rows.map((row) => CategorySchema.parse(row));
   }
 
-  async getCategory(brandId: string, id: string): Promise<Category> {
+  async getCategory(brandId: string, id: string): Promise<Category | null> {
     const row = await this.knex<Category>('category')
       .leftJoin('product', 'category.id', 'product.category_id')
       .select([
@@ -49,6 +49,10 @@ export class CategoryService {
       .where('category.brand_id', brandId)
       .orderBy('category.sortorder')
       .first();
-    return CategorySchema.parse(row);
+    if (row) {
+      return CategorySchema.parse(row);
+    } else {
+      return null;
+    }
   }
 }

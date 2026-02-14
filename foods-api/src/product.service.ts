@@ -36,7 +36,7 @@ export class ProductService {
     return rows.map((row) => ProductSchema.parse(row));
   }
 
-  async getProductById(brandId: string, id: string): Promise<Product> {
+  async getProductById(brandId: string, id: string): Promise<Product | null> {
     const row = await this.knex<Product>('product')
       .select([
         'product.id',
@@ -71,6 +71,10 @@ export class ProductService {
       .where('product.brand_id', brandId)
       .groupBy<Product>('product.id')
       .first();
-    return ProductSchema.parse(row);
+    if (row) {
+      return ProductSchema.parse(row);
+    } else {
+      return null;
+    }
   }
 }

@@ -1,4 +1,11 @@
-import { Controller, Get, Param, Query, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Query,
+  ValidationPipe,
+} from '@nestjs/common';
 import { OptionService } from './option.service';
 import { Option, OptionSearchDto } from './dto/option';
 
@@ -15,10 +22,14 @@ export class OptionController {
   }
 
   @Get(':id')
-  getOption(
+  async getOption(
     @Param('brandId') brandId: string,
     @Param('id') id: string,
   ): Promise<Option> {
-    return this.optionService.getOptionById(brandId, id);
+    const option = await this.optionService.getOptionById(brandId, id);
+    if (option) {
+      return option;
+    }
+    throw new NotFoundException();
   }
 }

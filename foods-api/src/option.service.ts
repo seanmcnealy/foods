@@ -33,7 +33,7 @@ export class OptionService {
     return rows.map((row) => OptionSchema.parse(row));
   }
 
-  async getOptionById(brandId: string, id: string): Promise<Option> {
+  async getOptionById(brandId: string, id: string): Promise<Option | null> {
     const row = await this.knex<Option>('option')
       .select([
         'option.id',
@@ -61,6 +61,10 @@ export class OptionService {
       .where('option.brand_id', brandId)
       .groupBy<Option>('option.id')
       .first();
-    return OptionSchema.parse(row);
+    if (row) {
+      return OptionSchema.parse(row);
+    } else {
+      return null;
+    }
   }
 }

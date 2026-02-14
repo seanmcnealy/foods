@@ -1,4 +1,11 @@
-import { Controller, Get, Param, Query, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Query,
+  ValidationPipe,
+} from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { Category, CategorySearchDto } from './dto/category';
 
@@ -16,10 +23,14 @@ export class CategoryController {
   }
 
   @Get(':id')
-  getCategory(
+  async getCategory(
     @Param('brandId') brandId: string,
     @Param('id') id: string,
   ): Promise<Category> {
-    return this.appService.getCategory(brandId, id);
+    const category = await this.appService.getCategory(brandId, id);
+    if (category) {
+      return category;
+    }
+    throw new NotFoundException();
   }
 }

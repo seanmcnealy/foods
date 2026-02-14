@@ -40,7 +40,10 @@ export class OptionGroupService {
     return rows.map((row) => OptionGroupSchema.parse(row));
   }
 
-  async getOptionGroupById(brandId: string, id: string): Promise<OptionGroup> {
+  async getOptionGroupById(
+    brandId: string,
+    id: string,
+  ): Promise<OptionGroup | null> {
     const row = await this.knex<OptionGroup>('option_group')
       .select([
         'option_group.id',

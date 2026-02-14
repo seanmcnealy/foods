@@ -1,4 +1,11 @@
-import { Controller, Get, Param, Query, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Query,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ProductService } from './product.service';
 import { Product, ProductSearchDto } from './dto/product';
 
@@ -16,10 +23,14 @@ export class ProductController {
   }
 
   @Get(':id')
-  getProduct(
+  async getProduct(
     @Param('brandId') brandId: string,
     @Param('id') id: string,
   ): Promise<Product> {
-    return this.productService.getProductById(brandId, id);
+    const product = await this.productService.getProductById(brandId, id);
+    if (product) {
+      return product;
+    }
+    throw new NotFoundException();
   }
 }
