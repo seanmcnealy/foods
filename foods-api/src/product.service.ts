@@ -29,7 +29,7 @@ export class ProductService {
       query.where('category_id', productSearch.category_id);
     }
     if (productSearch.isdisabled !== undefined) {
-      query.where('isdisabled', productSearch.isdisabled);
+      query.where('is_disabled', productSearch.isdisabled);
     }
 
     const rows = await query;
