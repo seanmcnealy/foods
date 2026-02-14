@@ -36,14 +36,16 @@ export class CategoryService {
 
   async getCategory(brandId: string, id: string): Promise<Category | null> {
     const row = await this.knex<Category>('category')
-      .leftJoin('product', 'category.id', 'product.category_id')
       .select([
         'category.id',
         'category.name',
         'category.extref',
         'category.sortorder',
-        this.knex.raw('ARRAY_AGG(product.name) as product_names'),
+        this.knex.raw(
+          "COALESCE(JSONB_AGG( TO_JSONB( (SELECT r FROM (SELECT product.id, product.name) r))) FILTER(WHERE product.id IS NOT NULL), '[]'::JSONB) as products",
+        ),
       ])
+      .leftJoin('product', 'category.id', 'product.category_id')
       .groupBy<Category>('category.id')
       .where('category.id', id)
       .where('category.brand_id', brandId)

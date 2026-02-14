@@ -2,7 +2,7 @@ import { Controller, Get, Param, Query, ValidationPipe } from '@nestjs/common';
 import { OptionGroupService } from './option-group.service';
 import { OptionGroup, OptionGroupSearchDto } from './dto/option-group';
 
-@Controller('/brand/:brandId/option-groups')
+@Controller('/brand/:brandId/option-group')
 export class OptionGroupController {
   constructor(private readonly optionGroupService: OptionGroupService) {}
 

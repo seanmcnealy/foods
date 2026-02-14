@@ -2,7 +2,7 @@ import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Type } from 'class-transformer';
 import { z } from 'zod';
 
-export const ProductOptionGroups = z.object({
+export const ProductOptionGroupsSchema = z.object({
   id: z.number(),
   description: z.string(),
 });
@@ -22,7 +22,7 @@ export const ProductSchema = z.object({
   quantity_increment: z.number(),
   short_description: z.string().nullish(),
   sort_order: z.number(),
-  option_groups: z.array(ProductOptionGroups.nullish()).nullish(),
+  option_groups: z.array(ProductOptionGroupsSchema.nullish()).nullish(),
 });
 
 export type Product = z.infer<typeof ProductSchema>;

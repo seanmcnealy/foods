@@ -1,12 +1,17 @@
 import { IsOptional, IsString } from 'class-validator';
 import { z } from 'zod';
 
+export const CategoryProductSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+});
+
 export const CategorySchema = z.object({
   id: z.number(),
   name: z.string(),
   extref: z.string(),
   sortorder: z.number(),
-  product_names: z.array(z.string()).nullish(),
+  products: z.array(CategoryProductSchema.nullish()).nullish(),
 });
 
 export type Category = z.infer<typeof CategorySchema>;

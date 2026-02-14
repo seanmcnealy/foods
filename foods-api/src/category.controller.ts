@@ -9,7 +9,7 @@ import {
 import { CategoryService } from './category.service';
 import { Category, CategorySearchDto } from './dto/category';
 
-@Controller('/brand/:brandId/categories')
+@Controller('/brand/:brandId/category')
 export class CategoryController {
   constructor(private readonly appService: CategoryService) {}
 

@@ -2,7 +2,7 @@ import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Type } from 'class-transformer';
 import { z } from 'zod';
 
-export const OptionOptionGroups = z.object({
+export const OptionOptionGroupsSchema = z.object({
   id: z.number(),
   description: z.string(),
 });
@@ -16,7 +16,7 @@ export const OptionSchema = z.object({
   adjusts_parent_price: z.boolean(),
   sort_order: z.number(),
   price: z.string().nullish(),
-  option_groups: z.array(OptionOptionGroups.nullish()).nullish(),
+  option_groups: z.array(OptionOptionGroupsSchema.nullish()).nullish(),
 });
 
 export type Option = z.infer<typeof OptionSchema>;

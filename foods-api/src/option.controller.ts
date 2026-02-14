@@ -9,7 +9,7 @@ import {
 import { OptionService } from './option.service';
 import { Option, OptionSearchDto } from './dto/option';
 
-@Controller('/brand/:brandId/options')
+@Controller('/brand/:brandId/option')
 export class OptionController {
   constructor(private readonly optionService: OptionService) {}
 

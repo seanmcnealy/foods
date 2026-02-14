@@ -9,7 +9,7 @@ import {
 import { ProductService } from './product.service';
 import { Product, ProductSearchDto } from './dto/product';
 
-@Controller('/brand/:brandId/products')
+@Controller('/brand/:brandId/product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
