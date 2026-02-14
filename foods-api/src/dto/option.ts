@@ -16,7 +16,7 @@ export const OptionSchema = z.object({
   adjusts_parent_price: z.boolean(),
   sort_order: z.number(),
   price: z.string().nullish(),
-  option_groups: z.array(OptionOptionGroupsSchema.nullish()).nullish(),
+  option_groups: z.array(OptionOptionGroupsSchema).nullish(),
 });
 
 export type Option = z.infer<typeof OptionSchema>;
@@ -29,15 +29,15 @@ export class OptionSearchDto {
   @IsOptional()
   @IsBoolean()
   @Type(() => Boolean)
-  is_default?: boolean;
+  isDefault?: boolean;
 
   @IsOptional()
   @IsBoolean()
   @Type(() => Boolean)
-  adjusts_parent_price?: boolean;
+  adjustsParentPrice?: boolean;
 
   @IsOptional()
   @IsNumber()
   @Type(() => Number)
-  option_group_id?: number;
+  optionGroupId?: number;
 }

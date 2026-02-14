@@ -19,14 +19,14 @@ export class OptionService {
     if (search.name) {
       query.where('name', 'ilike', `%${search.name}%`);
     }
-    if (search.is_default !== undefined) {
-      query.where('is_default', search.is_default);
+    if (search.isDefault !== undefined) {
+      query.where('is_default', search.isDefault);
     }
-    if (search.adjusts_parent_price !== undefined) {
-      query.where('adjusts_parent_price', search.adjusts_parent_price);
+    if (search.adjustsParentPrice !== undefined) {
+      query.where('adjusts_parent_price', search.adjustsParentPrice);
     }
-    if (search.option_group_id !== undefined) {
-      query.where('option_group_id', search.option_group_id);
+    if (search.optionGroupId !== undefined) {
+      query.where('option_group_id', search.optionGroupId);
     }
 
     const rows = await query;

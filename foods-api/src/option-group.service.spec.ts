@@ -6,6 +6,7 @@ import {
 } from '@testcontainers/postgresql';
 import { Knex } from 'knex';
 import { OptionGroupService } from './option-group.service';
+import assert from 'node:assert';
 
 describe('OptionGroupService', () => {
   let service: OptionGroupService;
@@ -175,7 +176,7 @@ describe('OptionGroupService', () => {
 
     it('should filter by supports_choice_quantities', async () => {
       const result = await service.getOptionGroups('brand-1', {
-        supports_choice_quantities: true,
+        supportsChoiceQuantities: true,
       });
       expect(result).toHaveLength(1);
       expect(result[0].description).toBe('Add Extra Cheese');
@@ -183,7 +184,7 @@ describe('OptionGroupService', () => {
 
     it('should filter by explanation_text', async () => {
       const result = await service.getOptionGroups('brand-1', {
-        explanation_text: 'items to remove',
+        explanationText: 'items to remove',
       });
       expect(result).toHaveLength(1);
       expect(result[0].description).toBe('Remove Ingredients');
@@ -200,12 +201,15 @@ describe('OptionGroupService', () => {
   describe('getOptionGroupById', () => {
     it('should return a single option group by id', async () => {
       const result = await service.getOptionGroupById('brand-1', '1');
+      assert.ok(result);
       expect(result.description).toBe('Size');
       expect(result.mandatory).toBe(true);
     });
 
     it('should include options via join', async () => {
       const result = await service.getOptionGroupById('brand-1', '1');
+      assert.ok(result);
+      assert.ok(result.options);
       expect(result.options).toHaveLength(2);
       const names = result.options.map((o) => o.name);
       expect(names).toEqual(expect.arrayContaining(['Small', 'Medium']));

@@ -18,7 +18,9 @@ export class CategoryService {
         'category.name',
         'category.extref',
         'category.sortorder',
-        this.knex.raw('ARRAY_AGG(product.name) as product_names'),
+        this.knex.raw(
+          "COALESCE(JSONB_AGG( TO_JSONB( (SELECT r FROM (SELECT product.id, product.name) r))) FILTER(WHERE product.id IS NOT NULL), '[]'::JSONB) as products",
+        ),
       ])
       .where('category.brand_id', brandId)
       .groupBy('category.id');

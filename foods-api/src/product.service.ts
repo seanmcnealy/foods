@@ -25,11 +25,11 @@ export class ProductService {
     if (productSearch.extref) {
       query.where('extref', productSearch.extref);
     }
-    if (productSearch.category_id !== undefined) {
-      query.where('category_id', productSearch.category_id);
+    if (productSearch.categoryId !== undefined) {
+      query.where('category_id', productSearch.categoryId);
     }
-    if (productSearch.isdisabled !== undefined) {
-      query.where('is_disabled', productSearch.isdisabled);
+    if (productSearch.isDisabled !== undefined) {
+      query.where('is_disabled', productSearch.isDisabled);
     }
 
     const rows = await query;

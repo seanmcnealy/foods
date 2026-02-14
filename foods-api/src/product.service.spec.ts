@@ -6,6 +6,7 @@ import {
 } from '@testcontainers/postgresql';
 import { Knex } from 'knex';
 import { ProductService } from './product.service';
+import assert from 'node:assert';
 
 describe('ProductService', () => {
   let service: ProductService;
@@ -179,7 +180,7 @@ describe('ProductService', () => {
 
     it('should order by sort_order', async () => {
       const result = await service.getProducts('brand-1', {
-        category_id: 10,
+        categoryId: 10,
       });
       expect(result[0].name).toBe('Turkey Club');
       expect(result[1].name).toBe('BLT');
@@ -208,13 +209,13 @@ describe('ProductService', () => {
     });
 
     it('should filter by category_id', async () => {
-      const result = await service.getProducts('brand-1', { category_id: 20 });
+      const result = await service.getProducts('brand-1', { categoryId: 20 });
       expect(result).toHaveLength(1);
       expect(result[0].name).toBe('Caesar Salad');
     });
 
     it('should filter by isdisabled', async () => {
-      const result = await service.getProducts('brand-1', { isdisabled: true });
+      const result = await service.getProducts('brand-1', { isDisabled: true });
       expect(result).toHaveLength(1);
       expect(result[0].name).toBe('Caesar Salad');
     });
@@ -230,12 +231,14 @@ describe('ProductService', () => {
   describe('getProductById', () => {
     it('should return a single product by id', async () => {
       const result = await service.getProductById('brand-1', '1');
+      assert.ok(result);
       expect(result.name).toBe('Turkey Club');
       expect(result.extref).toBe('ext-p1');
     });
 
     it('should include option_groups via join', async () => {
       const result = await service.getProductById('brand-1', '1');
+      assert.ok(result);
       expect(result.option_groups).toHaveLength(2);
       const descriptions = result.option_groups.map((og) => og.description);
       expect(descriptions).toEqual(
@@ -245,6 +248,7 @@ describe('ProductService', () => {
 
     it('should return empty option_groups when none linked', async () => {
       const result = await service.getProductById('brand-1', '2');
+      assert.ok(result);
       expect(result.option_groups).toHaveLength(0);
     });
   });

@@ -6,6 +6,7 @@ import {
 } from '@testcontainers/postgresql';
 import { Knex } from 'knex';
 import { CategoryService } from './category.service';
+import assert from 'node:assert';
 
 describe('CategoryService', () => {
   let service: CategoryService;
@@ -125,7 +126,7 @@ describe('CategoryService', () => {
       const result = await service.getCategories('brand-1', {
         name: 'Sandwiches',
       });
-      expect(result[0].product_names).toEqual(
+      expect(result[0].products.map((p) => p.name)).toEqual(
         expect.arrayContaining(['Turkey Club', 'BLT']),
       );
     });
@@ -134,13 +135,15 @@ describe('CategoryService', () => {
   describe('getCategory', () => {
     it('should return a single category by id', async () => {
       const result = await service.getCategory('brand-1', '1');
+      assert.ok(result);
       expect(result.name).toBe('Sandwiches');
       expect(result.extref).toBe('ext-1');
     });
 
     it('should include product_names', async () => {
       const result = await service.getCategory('brand-1', '1');
-      expect(result.product_names).toEqual(
+      assert.ok(result);
+      expect(result.products.map((p) => p.name)).toEqual(
         expect.arrayContaining(['Turkey Club', 'BLT']),
       );
     });

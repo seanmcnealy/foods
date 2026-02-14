@@ -15,7 +15,7 @@ export const OptionGroupSchema = z.object({
   choice_quantity_increment: z.number(),
   explanation_text: z.string().nullish(),
   sort_order: z.number(),
-  options: z.array(OptionGroupOptionSchema.nullish()).nullish(),
+  options: z.array(OptionGroupOptionSchema).nullish(),
 });
 
 export type OptionGroup = z.infer<typeof OptionGroupSchema>;
@@ -33,9 +33,9 @@ export class OptionGroupSearchDto {
   @IsOptional()
   @IsBoolean()
   @Type(() => Boolean)
-  supports_choice_quantities?: boolean;
+  supportsChoiceQuantities?: boolean;
 
   @IsOptional()
   @IsString()
-  explanation_text?: string;
+  explanationText?: string;
 }

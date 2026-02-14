@@ -26,14 +26,14 @@ export class OptionGroupService {
     if (search.mandatory !== undefined) {
       query.where('mandatory', search.mandatory);
     }
-    if (search.supports_choice_quantities !== undefined) {
+    if (search.supportsChoiceQuantities !== undefined) {
       query.where(
         'supports_choice_quantities',
-        search.supports_choice_quantities,
+        search.supportsChoiceQuantities,
       );
     }
-    if (search.explanation_text) {
-      query.where('explanation_text', 'ilike', `%${search.explanation_text}%`);
+    if (search.explanationText) {
+      query.where('explanation_text', 'ilike', `%${search.explanationText}%`);
     }
 
     const rows = await query;

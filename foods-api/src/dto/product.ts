@@ -22,7 +22,7 @@ export const ProductSchema = z.object({
   quantity_increment: z.number(),
   short_description: z.string().nullish(),
   sort_order: z.number(),
-  option_groups: z.array(ProductOptionGroupsSchema.nullish()).nullish(),
+  option_groups: z.array(ProductOptionGroupsSchema).nullish(),
 });
 
 export type Product = z.infer<typeof ProductSchema>;
@@ -43,10 +43,10 @@ export class ProductSearchDto {
   @IsOptional()
   @IsNumber()
   @Type(() => Number)
-  category_id?: number;
+  categoryId?: number;
 
   @IsOptional()
   @IsBoolean()
   @Type(() => Boolean)
-  isdisabled?: boolean;
+  isDisabled?: boolean;
 }

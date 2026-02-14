@@ -11,7 +11,7 @@ export const CategorySchema = z.object({
   name: z.string(),
   extref: z.string(),
   sortorder: z.number(),
-  products: z.array(CategoryProductSchema.nullish()).nullish(),
+  products: z.array(CategoryProductSchema).nullish(),
 });
 
 export type Category = z.infer<typeof CategorySchema>;

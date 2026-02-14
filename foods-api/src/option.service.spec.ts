@@ -6,6 +6,7 @@ import {
 } from '@testcontainers/postgresql';
 import { Knex } from 'knex';
 import { OptionService } from './option.service';
+import assert from 'node:assert';
 
 describe('OptionService', () => {
   let service: OptionService;
@@ -160,7 +161,7 @@ describe('OptionService', () => {
 
     it('should order by sort_order', async () => {
       const result = await service.getOptions('brand-1', {
-        option_group_id: 10,
+        optionGroupId: 10,
       });
       expect(result[0].name).toBe('Small');
       expect(result[1].name).toBe('Medium');
@@ -173,14 +174,14 @@ describe('OptionService', () => {
     });
 
     it('should filter by is_default', async () => {
-      const result = await service.getOptions('brand-1', { is_default: true });
+      const result = await service.getOptions('brand-1', { isDefault: true });
       expect(result).toHaveLength(1);
       expect(result[0].name).toBe('Medium');
     });
 
     it('should filter by adjusts_parent_price', async () => {
       const result = await service.getOptions('brand-1', {
-        adjusts_parent_price: false,
+        adjustsParentPrice: false,
       });
       expect(result).toHaveLength(2);
       expect(result.map((o) => o.name)).toEqual(
@@ -190,7 +191,7 @@ describe('OptionService', () => {
 
     it('should filter by option_group_id', async () => {
       const result = await service.getOptions('brand-1', {
-        option_group_id: 20,
+        optionGroupId: 20,
       });
       expect(result).toHaveLength(1);
       expect(result[0].name).toBe('No Bacon');
@@ -207,12 +208,14 @@ describe('OptionService', () => {
   describe('getOptionById', () => {
     it('should return a single option by id', async () => {
       const result = await service.getOptionById('brand-1', '1');
+      assert.ok(result);
       expect(result.name).toBe('Small');
       expect(result.is_default).toBe(false);
     });
 
     it('should include option_groups via join', async () => {
       const result = await service.getOptionById('brand-1', '1');
+      assert.ok(result);
       expect(result.option_groups).toHaveLength(2);
       const descriptions = result.option_groups.map((og) => og.description);
       expect(descriptions).toEqual(
@@ -222,6 +225,7 @@ describe('OptionService', () => {
 
     it('should return empty option_groups when none linked', async () => {
       const result = await service.getOptionById('brand-1', '3');
+      assert.ok(result);
       expect(result.option_groups).toHaveLength(0);
     });
   });
