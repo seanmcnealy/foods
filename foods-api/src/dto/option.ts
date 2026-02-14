@@ -1,6 +1,7 @@
 import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { z } from 'zod';
+import { BooleanTransformer } from './boolean.transformer';
 
 export const OptionOptionGroupsSchema = z.object({
   id: z.number(),
@@ -28,12 +29,12 @@ export class OptionSearchDto {
 
   @IsOptional()
   @IsBoolean()
-  @Type(() => Boolean)
+  @Transform(BooleanTransformer)
   isDefault?: boolean;
 
   @IsOptional()
   @IsBoolean()
-  @Type(() => Boolean)
+  @Transform(BooleanTransformer)
   adjustsParentPrice?: boolean;
 
   @IsOptional()

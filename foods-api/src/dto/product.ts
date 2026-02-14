@@ -1,6 +1,7 @@
 import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { z } from 'zod';
+import { BooleanTransformer } from './boolean.transformer';
 
 export const ProductOptionGroupsSchema = z.object({
   id: z.number(),
@@ -47,6 +48,6 @@ export class ProductSearchDto {
 
   @IsOptional()
   @IsBoolean()
-  @Type(() => Boolean)
+  @Transform(BooleanTransformer)
   isDisabled?: boolean;
 }
