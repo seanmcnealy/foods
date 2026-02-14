@@ -24,7 +24,17 @@ import { ProductService } from './product.service';
       },
     }),
   ],
-  controllers: [CategoryController, ProductController, OptionGroupController, OptionController],
-  providers: [CategoryService, ProductService, OptionGroupService, OptionService],
+  controllers: [
+    CategoryController,
+    ProductController,
+    OptionGroupController,
+    OptionController,
+  ],
+  providers: [
+    CategoryService,
+    ProductService,
+    OptionGroupService,
+    OptionService,
+  ],
 })
 export class AppModule {}
